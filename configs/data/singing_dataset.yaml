@@ -1,0 +1,53 @@
+# @package data
+
+_target_: src.data.singing_dataset.SingingDataset
+
+# Dataset paths
+data_dir: "data"
+wav_dir: "wav"
+midi_dir: "midi"
+meta_file: "meta.csv"
+
+# Audio processing
+sample_rate: 22050
+hop_length: 256
+win_length: 1024
+n_fft: 1024
+n_mel_channels: 80
+mel_fmin: 0
+mel_fmax: 8000
+
+# Text processing
+text_processing:
+  phoneme_vocab_size: 256
+  add_blank: true
+  normalize_text: true
+  max_text_length: 200
+
+# MIDI processing
+midi_processing:
+  min_note: 21  # A0
+  max_note: 108  # C8
+  note_duration_threshold: 0.1  # seconds
+  tempo: 120  # BPM
+
+# Data augmentation
+augmentation:
+  enabled: true
+  pitch_shift_range: [-2, 2]  # semitones
+  time_stretch_range: [0.9, 1.1]
+  noise_factor: 0.01
+  reverb_probability: 0.3
+
+# Data splits
+splits:
+  train: 0.8
+  val: 0.1
+  test: 0.1
+  random_seed: 42
+
+# Batch processing
+batch_size: 16
+max_audio_length: 10.0  # seconds
+max_text_length: 200
+collate_fn: "src.data.collate_fn.singing_collate_fn"

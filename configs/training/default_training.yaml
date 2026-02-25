@@ -1,0 +1,71 @@
+# @package training
+
+# Training hyperparameters
+epochs: 1000
+batch_size: 16
+learning_rate: 1e-3
+weight_decay: 1e-6
+gradient_clip_val: 1.0
+
+# Optimizer
+optimizer:
+  _target_: torch.optim.Adam
+  lr: 1e-3
+  betas: [0.9, 0.999]
+  eps: 1e-9
+  weight_decay: 1e-6
+
+# Learning rate scheduler
+scheduler:
+  _target_: torch.optim.lr_scheduler.ReduceLROnPlateau
+  mode: "min"
+  factor: 0.5
+  patience: 10
+  min_lr: 1e-6
+
+# Loss weights
+loss_weights:
+  mel_loss: 1.0
+  gate_loss: 1.0
+  attention_loss: 0.1
+  vocoder_mel_loss: 45.0
+  vocoder_fm_loss: 2.0
+  vocoder_gen_loss: 1.0
+  vocoder_disc_loss: 1.0
+
+# Validation
+validation:
+  val_check_interval: 0.5  # Validate every 0.5 epochs
+  val_every_n_epochs: 1
+  save_top_k: 3
+  monitor: "val_loss"
+  mode: "min"
+
+# Checkpointing
+checkpointing:
+  save_every_n_epochs: 5
+  save_last: true
+  save_best: true
+  filename: "epoch_{epoch:03d}-val_loss_{val_loss:.4f}"
+  auto_insert_metric_name: false
+
+# Early stopping
+early_stopping:
+  monitor: "val_loss"
+  patience: 20
+  mode: "min"
+  min_delta: 0.001
+
+# Mixed precision
+mixed_precision:
+  enabled: true
+  precision: 16
+
+# Gradient accumulation
+gradient_accumulation_steps: 1
+
+# Logging
+logging:
+  log_every_n_steps: 100
+  log_grad_norm: true
+  log_learning_rate: true

@@ -1,0 +1,40 @@
+# @package _global_
+
+defaults:
+  - _self_
+  - model: tacotron2_hifigan
+  - data: singing_dataset
+  - training: default_training
+
+# Experiment settings
+experiment:
+  name: "singing_voice_synthesis"
+  version: "v1.0"
+  tags: ["svs", "tacotron2", "hifigan"]
+
+# Paths
+paths:
+  data_dir: "data"
+  checkpoint_dir: "checkpoints"
+  log_dir: "logs"
+  output_dir: "outputs"
+
+# Device settings
+device: "auto"  # auto, cuda, mps, cpu
+num_workers: 4
+pin_memory: true
+
+# Random seed for reproducibility
+seed: 42
+
+# Logging
+logging:
+  level: "INFO"
+  log_every_n_steps: 100
+  save_every_n_epochs: 5
+
+# Privacy settings
+privacy:
+  anonymize_filenames: true
+  remove_pii_from_logs: true
+  disclaimer_shown: true
